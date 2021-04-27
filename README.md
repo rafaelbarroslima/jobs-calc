@@ -41,9 +41,9 @@ Você pode visualizar o layout do projeto através [desse link](https://www.figm
 
 ## :memo: Licença
 
-Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](.github/LICENSE.md) para mais detalhes.
+Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](https://github.com/rafaelbarroslima/jobs-calc/blob/master/LICENSE) para mais detalhes.
 
 ---
 
-Feito com ♥ by Rocketseat :wave: [Participe da nossa comunidade!](https://discordapp.com/invite/gCRAFhc)# jobs-calc
+Feito com ♥ :wave: # jobs-calc
 Calculadora para contabilizar horas e valores de um trabalho de acordo com o tempo dedicado ao mesmo.
