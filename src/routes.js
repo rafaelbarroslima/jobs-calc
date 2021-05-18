@@ -1,7 +1,6 @@
 const express = require("express");
 const routes = express.Router();
-
-const views = __dirname + "/views/";
+const ProfileController = require("./controllers/ProfileController");
 
 const Profile = {
     data: {
@@ -13,41 +12,6 @@ const Profile = {
         "vacation-per-year": 4,
         "value-hour": 14
     },
-
-    controllers: {
-        index(req, res) {
-            return res.render(views + "profile", { profile: Profile.data });
-        },
-
-        update(req, res) {
-            // req.body para pegar os dados
-            const data = req.body;
-
-            // Definir quantas semanas tem um ano: 52
-            const weeksPerYear = 52;
-
-            // Remover as semanas de férias do ano, para pegar quantas semanas tem 1 mês
-            const weeksPerMonth = (weeksPerYear - data["vacation-per-year"]) / 12;
-
-            // Total de horas trabalhadas na semana
-            const weekTotalHours = data["hours-per-day"] * data["days-per-week"];
-
-            // Horas trabalhadas no mês
-            const monthlyTotalHours = weekTotalHours * weeksPerMonth;
-
-            // Qual será o valor da minha hora
-            const valueHour = data["monthly-budget"] / monthlyTotalHours;
-
-            Profile.data = {
-                ...Profile.data,
-                ...req.body,
-                "value-hour": valueHour
-            }
-
-            return res.redirect('/profile');
-        }
-
-    }
 };
 
 const Job = {
@@ -83,11 +47,11 @@ const Job = {
                 };
             });
 
-            return res.render(views + "index", { jobs: updatedJobs });
+            return res.render("index", { jobs: updatedJobs });
         },
 
         create(req, res) {
-            return res.render(views + "job");
+            return res.render("job");
         },
 
         save(req,res) {
@@ -113,7 +77,7 @@ const Job = {
                 return res.send("Job not found!");
             }
             job.budget = Job.services.calculateBudget(job, Profile.data["value-hour"]);
-            return res.render(views + "job-edit", { job });
+            return res.render("job-edit", { job });
         },
 
         update(req, res) {
@@ -176,7 +140,7 @@ routes.post("/job", Job.controllers.save);
 routes.get("/job/:id", Job.controllers.show);
 routes.post("/job/:id", Job.controllers.update);
 routes.post("/job/delete/:id", Job.controllers.delete);
-routes.get("/profile", Profile.controllers.index);
-routes.post("/profile", Profile.controllers.update);
+routes.get("/profile", ProfileController.index);
+routes.post("/profile", ProfileController.update);
 
 module.exports = routes;
